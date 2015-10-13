@@ -66,7 +66,11 @@ if 'sphinx-build' in sys.argv[0]:
     pass
 else:
     import magnum.config
-    magnum.config.initialize(sys.argv)
+    if 'kernel' in sys.argv[0]: # dirty hack when launched via IPython notebook
+        magnum.config.initialize([sys.argv[0], '-t', '3'])
+    else:
+        magnum.config.initialize(sys.argv)
+
     atexit.register(magnum.config.deinitialize)
 del sys
 del atexit
